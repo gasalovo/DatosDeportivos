@@ -46,8 +46,8 @@ public class PartidoSerializer implements JsonSerializer<Partido> {
 		json.writeObjectStart();
         //json.writeValue("dia", formater.format(partido.getFecha()));
         //json.writeValue("hora", formater2.format(partido.getFecha()));
-        json.writeValue("local", partido.local.getId());
-        json.writeValue("visitante", partido.visitante.getId());
+        json.writeValue("local", partido.local.getIdentificador());
+        json.writeValue("visitante", partido.visitante.getIdentificador());
         json.writeValue("fecha", partido.getFecha());
         json.writeValue("resultado", partido.getResultado());
         json.writeObjectEnd();

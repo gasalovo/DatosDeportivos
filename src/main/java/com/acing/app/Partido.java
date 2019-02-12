@@ -12,10 +12,15 @@ import com.esotericsoftware.jsonbeans.JsonValue;
 public class Partido extends DatableImpl {
 	
 	protected String resultado;
+	//protected Date fecha;
+	transient protected Participante local;
+	transient protected Participante visitante;
+	protected Collection<Suceso> sucesos;
+	protected Collection<Participante> participantes;
 
 	public Partido(Participante local, Participante visitante, Date fecha) {
-		super.local = local;
-		super.visitante = visitante;
+		this.local = local;
+		this.visitante = visitante;
 		super.fechaDate = fecha;
 	}
 	

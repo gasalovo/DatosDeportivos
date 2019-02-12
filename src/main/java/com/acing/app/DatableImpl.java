@@ -12,11 +12,6 @@ public abstract class DatableImpl implements Datable {
 	Long timeStamp;
 	DiaHora fecha;
 	
-	//protected Date fecha;
-	transient protected Participante local;
-	transient protected Participante visitante;
-	protected Collection<Suceso> sucesos;
-	protected Collection<Participante> participantes;
 	
 	public DatableImpl() {
 		super();
