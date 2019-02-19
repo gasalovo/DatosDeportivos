@@ -22,11 +22,17 @@ import com.esotericsoftware.jsonbeans.Json;
 import com.esotericsoftware.jsonbeans.OutputType;
 
 
-public class SerializadorCSV {
+public class SerializadorCSV implements PartidoDAO {
+	
+	static String ruta;
+	
+	public SerializadorCSV(String ruta) {
+		SerializadorCSV.ruta = ruta;
+	}
+	
 	public static Collection<Partido> getPartidos(String rutaArchivo){
 		
 		Collection<Partido> partidos = new ArrayList<>();
-		
 		
 		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(rutaArchivo), "UTF8"))){
 			String line = reader.readLine();
@@ -88,50 +94,40 @@ public class SerializadorCSV {
 		return evento;
 		
 	}
-	
-	public static void guardarStringEnFichero(String rutaArchivo, String cadena) {
-		try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rutaArchivo), "UTF8"))){
-			writer.write(cadena);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
-       
+
+	@Override
+	public Collection<? extends Partido> getEventos() {
+		return getPartidos(ruta);
 	}
 
-
-	public static Collection<Partido> jsonToPartidos(String rutaArchivo) throws UnsupportedEncodingException, FileNotFoundException {
-		 
-		Collection<Partido> partidos = new ArrayList<>();
-		// Serializador JSON
-    	Json json = new Json(OutputType.json);
-    	json.setSerializer(Date.class, new DateSerializer());
-    	json.setSerializer(Partido.class, new PartidoSerializer());
-    	
-    	try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(rutaArchivo), "UTF8"))){
-			String line = reader.readLine();
-			while((line = reader.readLine()) != null) {
-				partidos.add(json.fromJson(Partido.class, line));
-			}
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return partidos;
-    	
+	@Override
+	public Collection<? extends Partido> getEventos(Date fecha) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public <T extends Partido> void guardarEvento(T partido) {
+		
+	}
+
+	@Override
+	public <T extends Partido> T removeEvento(T partido) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends Partido> boolean actualizarEvento(T partido) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public <T extends Partido> int guardarEventos(T... partidos) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
 

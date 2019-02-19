@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.esotericsoftware.jsonbeans.Json;
-import com.esotericsoftware.jsonbeans.JsonValue;
 import com.esotericsoftware.jsonbeans.OutputType;
 
 /*
@@ -24,10 +23,10 @@ import com.esotericsoftware.jsonbeans.OutputType;
  */
 public class App {
     
-    
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException {
     	
     	String fichero = "SP1.csv";
+    	PartidoDAO partidoDAO = new SerializadorCSV(fichero);
         
         // Abrimos conexion al fichero
         URLConnection urlCon;
@@ -63,40 +62,30 @@ public class App {
         } else {
         	System.out.println("El fichero ya existe. Leyendo");
         }
-        //Leemos el fichero de disco
-        Collection<Partido> partidos;
-        partidos = SerializadorCSV.getPartidos(fichero);
+		//deserializamos del CSV
+		Collection<? extends Partido> partidos;
+		partidos = partidoDAO.getEventos();
+		
+		File file_json = new File("eventos.json");
+	    if (file_json.exists()) { //si el fichero existe me lo cargo
+	    	file_json.delete();
+	    }
+		
+		//serializamos cada partido a JSON
+		partidoDAO = new SerializadorJSON("eventos.json");
+		for (Partido partido: partidos) {
+			partidoDAO.guardarEvento(partido);
+		}
         
-      //Imprimimos los partidos
-//      for (Partido partido : partidos) {
+	  // deserializamos el json
+	  partidos = partidoDAO.getEventos();
+	  //Imprimimos los partidos
+//	    for (Partido partido : partidos) {
 //			System.out.println(partido);
 //		}
-        
-        // Serializador JSON
-    	Json json = new Json(OutputType.json);
-    	json.setSerializer(Date.class, new DateSerializer());
-    	json.setSerializer(Partido.class, new PartidoSerializer());
-    	String eventosJson = "";
-    	for (Partido partido: partidos) {
-    		eventosJson += json.toJson(partido);
-    		eventosJson += "\n";
-    	}
-    	
-    	System.out.println(eventosJson);
-    	
-    	//Guardamos el json
-    	SerializadorCSV.guardarStringEnFichero("eventos.json", eventosJson);
-        
-    	//Imprimimos los partidos
-//        for (Partido partido : partidos) {
-//  			System.out.println(partido);
-//  		}
-//              
-      partidos = SerializadorCSV.jsonToPartidos("eventos.json");
-      //Imprimimos los partidos
-        for (Partido partido : partidos) {
-  			System.out.println(partido);
-  		}
+	  //partidos.stream().forEach(e->System.out.println(e));
+	  //usamos el lambda printn ya que admite un parametro por cada uno
+	  partidos.stream().filter(e->e.getResultado().equals("3-0")).map(e2->e2.getResultado()+" palizon").forEach(System.out::println);
     	
     }
 }
