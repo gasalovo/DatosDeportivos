@@ -9,13 +9,6 @@ public abstract class EventoImpl implements Evento {
 	
 	transient protected Participante local;
 	transient protected Participante visitante;
-	
-//	public EventoImpl(Participante local, Participante visitante, Date fecha) {
-//		this.local = local;
-//		this.visitante = visitante;
-//		this.fecha = fecha;
-//	}
-	
-	
+
 	
 }

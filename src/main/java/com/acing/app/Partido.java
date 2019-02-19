@@ -1,18 +1,12 @@
 package com.acing.app;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-
-import com.esotericsoftware.jsonbeans.Json;
-import com.esotericsoftware.jsonbeans.JsonSerializable;
-import com.esotericsoftware.jsonbeans.JsonValue;
+import es.lanyu.commons.tiempo.DatableImpl;
 
 public class Partido extends DatableImpl {
 	
 	protected String resultado;
-	//protected Date fecha;
 	transient protected Participante local;
 	transient protected Participante visitante;
 	protected Collection<Suceso> sucesos;
@@ -21,7 +15,7 @@ public class Partido extends DatableImpl {
 	public Partido(Participante local, Participante visitante, Date fecha) {
 		this.local = local;
 		this.visitante = visitante;
-		super.fechaDate = fecha;
+		super.fecha = fecha;
 	}
 	
 	public Partido() {
@@ -50,7 +44,7 @@ public class Partido extends DatableImpl {
 
 	
 	public String toString() {
-		return "Partido [resultado=" + resultado + ", fecha=" + fechaDate + ", local=" + local + ", visitante=" + visitante
+		return "Partido [resultado=" + resultado + ", fecha=" + fecha + ", local=" + local + ", visitante=" + visitante
 				+ "]";
 	}
 

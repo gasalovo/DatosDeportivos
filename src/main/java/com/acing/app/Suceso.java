@@ -1,11 +1,9 @@
 package com.acing.app;
 
 public class Suceso {
-	int tipo;
-	String valor;
+	Participante participante;
 	
-	public Suceso(int tipo, String valor) {
-		this.tipo = tipo;
-		this.valor = valor;
+	public Suceso() {
+		
 	}
 }
