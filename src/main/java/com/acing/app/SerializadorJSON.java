@@ -25,7 +25,7 @@ public class SerializadorJSON implements PartidoDAO {
 	public SerializadorJSON(String ruta) {
 		this.ruta = ruta;
 		json = new Json(OutputType.json);
-		json.setSerializer(Date.class, new DateSerializer());
+		//json.setSerializer(Date.class, new DateSerializer());
     	//json.setSerializer(Partido.class, new PartidoSerializer());
 	}
 	
@@ -33,7 +33,7 @@ public class SerializadorJSON implements PartidoDAO {
     	String eventosJson = "";
     	
     	eventosJson += json.toJson(partido);
-    	eventosJson += "\n";
+    	//eventosJson += "\n";
     	
     	//Guardamos el json
     	guardarStringEnFichero(ruta, eventosJson);
@@ -42,6 +42,7 @@ public class SerializadorJSON implements PartidoDAO {
 	public void guardarStringEnFichero(String rutaArchivo, String cadena) {
 	    try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rutaArchivo, true), "UTF8"))){
 			writer.write(cadena);
+			writer.newLine();
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -7,11 +7,11 @@ import es.lanyu.commons.tiempo.DatableImpl;
 
 public abstract class EventoImpl extends DatableImpl implements Evento {
 	protected Collection<Suceso> sucesos;
-	protected Collection<Participante> participantes;
+	transient protected Collection<Participante> participantes;
 	//protected Date fecha;
 	
-	transient protected Participante local;
-	transient protected Participante visitante;
+	protected Participante local;
+	protected Participante visitante;
 	
 	public EventoImpl() {
 		//sucesos = new ArrayList<>();

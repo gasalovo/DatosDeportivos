@@ -8,13 +8,12 @@ import com.google.common.graph.SuccessorsFunction;
 import es.lanyu.commons.tiempo.DatableImpl;
 
 public class Partido extends EventoImpl {
-	
 
 	public Partido(Participante local, Participante visitante, Date fecha) {
 		super();
 		this.local = local;
 		this.visitante = visitante;
-		this.fecha = fecha;
+		setFecha(fecha);
 	}
 	
 	public Partido() {
