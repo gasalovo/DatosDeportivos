@@ -30,7 +30,7 @@ public class SerializadorCSV implements PartidoDAO {
 		SerializadorCSV.ruta = ruta;
 	}
 	
-	public static Collection<Partido> getPartidos(String rutaArchivo){
+	public Collection<Partido> getPartidos(String rutaArchivo){
 		
 		Collection<Partido> partidos = new ArrayList<>();
 		
@@ -52,14 +52,24 @@ public class SerializadorCSV implements PartidoDAO {
 		return partidos;
 	}
 	
+	private void addGoles(int numeroGoles, Participante equipo, Evento evento) {
+		for (int i=0; i< numeroGoles; i++) {
+			Suceso gol = new Suceso();
+			gol.setParticipante(equipo);
+			evento.addSuceso(gol);
+		}
+	}
+	
 	//linea CSV to Partido
-	public static Partido deserializarPartido(String linea){
+	public Partido deserializarPartido(String linea){
 		String[] campos = linea.split(",");
 		String fechaString = campos[1];
 		String localString = campos[2];
 		String visitanteString = campos[3];
-		String golesLocal = campos[4];
-		String golesVisitante = campos[5];
+		String golesLocalString = campos[4];
+		String golesVisitanteString = campos[5];
+		int golesLocal = Integer.parseInt(golesLocalString);
+		int golesVisiante = Integer.parseInt(golesVisitanteString);
 		Date fecha;
 
 		
@@ -70,7 +80,7 @@ public class SerializadorCSV implements PartidoDAO {
 			fecha = new Date();
 			e.printStackTrace();
 		}
-		String resultado = golesLocal + "-" + golesVisitante;
+		String resultado = golesLocalString + "-" + golesVisitanteString;
 		Participante local, visitante;
 		
 		//locales
@@ -89,7 +99,9 @@ public class SerializadorCSV implements PartidoDAO {
 		}
 		
 		Partido evento = new Partido(local, visitante, fecha);
-		evento.setResultado(resultado);
+		//evento.setResultado(resultado);
+		addGoles(golesLocal, local, evento);
+		addGoles(golesVisiante, local, evento);
 		
 		return evento;
 		

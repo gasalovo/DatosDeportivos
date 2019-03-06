@@ -2,20 +2,19 @@ package com.acing.app;
 
 import java.util.Collection;
 import java.util.Date;
+
+import com.google.common.graph.SuccessorsFunction;
+
 import es.lanyu.commons.tiempo.DatableImpl;
 
-public class Partido extends DatableImpl {
+public class Partido extends EventoImpl {
 	
-	protected String resultado;
-	transient protected Participante local;
-	transient protected Participante visitante;
-	protected Collection<Suceso> sucesos;
-	protected Collection<Participante> participantes;
 
 	public Partido(Participante local, Participante visitante, Date fecha) {
+		super();
 		this.local = local;
 		this.visitante = visitante;
-		super.fecha = fecha;
+		this.fecha = fecha;
 	}
 	
 	public Partido() {
@@ -23,7 +22,7 @@ public class Partido extends DatableImpl {
 	}
 	
 	public void setResultado(String resultado) {
-		this.resultado = resultado;
+		//this.resultado = resultado;
 
 	}
 	
@@ -33,6 +32,10 @@ public class Partido extends DatableImpl {
 
 	
 	public String getResultado() {
+		long golesLocal = getSucesos().stream().filter(s->s.getParticipante().equals(local)).count();
+		long golesVisitante = getSucesos().stream().filter(s->s.getParticipante().equals(visitante)).count();
+		String resultado = (int)golesLocal +"-"+ (int)golesVisitante;
+		
 		return resultado;
 	}
 
@@ -44,8 +47,13 @@ public class Partido extends DatableImpl {
 
 	
 	public String toString() {
-		return "Partido [resultado=" + resultado + ", fecha=" + fecha + ", local=" + local + ", visitante=" + visitante
+		return "Partido [resultado=" + getResultado() + ", fecha=" + fecha + ", local=" + local + ", visitante=" + visitante
 				+ "]";
+	}
+
+	public void setSucesos(Collection<Suceso> sucesos) {
+		super.sucesos = sucesos;
+		
 	}
 
 	

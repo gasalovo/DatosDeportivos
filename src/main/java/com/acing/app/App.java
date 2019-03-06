@@ -68,6 +68,9 @@ public class App {
 	    	file_json.delete();
 	    }
 		
+	    //print partidos
+	    partidos.stream().forEach(System.out::println);
+	    
 		//serializamos cada partido a JSON
 		partidoDAO = new SerializadorJSON("eventos.json");
 		for (Partido partido: partidos) {

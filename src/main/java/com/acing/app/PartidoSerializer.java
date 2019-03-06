@@ -34,7 +34,8 @@ public class PartidoSerializer implements JsonSerializer<Partido> {
 		Date fecha = ds.read(json, jsonValue.get("fecha"), Date.class);
 		
 		Partido partido = new Partido(local, visitante, fecha);
-		partido.setResultado(jsonValue.getString("resultado"));
+		//partido.setResultado(jsonValue.getString("resultado"));
+		//partido.setSucesos(jsonValue.get("sucesos"));
 		
 		return partido;
 	}
@@ -49,7 +50,7 @@ public class PartidoSerializer implements JsonSerializer<Partido> {
         json.writeValue("local", partido.local.getIdentificador());
         json.writeValue("visitante", partido.visitante.getIdentificador());
         json.writeValue("fecha", partido.getFecha());
-        json.writeValue("resultado", partido.getResultado());
+        json.writeValue("sucesos", partido.getSucesos());
         json.writeObjectEnd();
 		
 	}

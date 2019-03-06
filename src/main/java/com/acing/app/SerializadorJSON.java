@@ -26,7 +26,7 @@ public class SerializadorJSON implements PartidoDAO {
 		this.ruta = ruta;
 		json = new Json(OutputType.json);
 		json.setSerializer(Date.class, new DateSerializer());
-    	json.setSerializer(Partido.class, new PartidoSerializer());
+    	//json.setSerializer(Partido.class, new PartidoSerializer());
 	}
 	
 	public void guardarPartido(Partido partido) {
