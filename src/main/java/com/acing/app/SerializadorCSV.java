@@ -84,9 +84,11 @@ public class SerializadorCSV implements PartidoDAO {
 		Participante local, visitante;
 		
 		//locales
+		/*
 		if (!Participante.mapaParticipanteIdPorNombre.containsKey(localString)) { //no esta en el Map
 			local = new Participante(localString);
 			Participante.mapaParticipanteIdPorNombre.put(localString, local);
+			//System.out.println("Added: "+localString);
 		} else {
 			local = Participante.mapaParticipanteIdPorNombre.get(localString);
 		}
@@ -94,9 +96,17 @@ public class SerializadorCSV implements PartidoDAO {
 		if (!Participante.mapaParticipanteIdPorNombre.containsKey(visitanteString)) { //no esta en el Map
 			visitante = new Participante(visitanteString);
 			Participante.mapaParticipanteIdPorNombre.put(visitanteString, local);
+			//System.out.println("Added: "+visitanteString);
 		} else {
 			visitante = Participante.mapaParticipanteIdPorNombre.get(visitanteString);
 		}
+		*/
+		local = new Participante(localString);
+		visitante = new Participante(visitanteString);
+		
+		Participante.mapaParticipanteIdPorNombre.put(localString, local);
+		Participante.mapaParticipanteIdPorNombre.put(visitanteString, visitante);
+		
 		
 		Partido evento = new Partido(local, visitante, fecha);
 		//evento.setResultado(resultado);

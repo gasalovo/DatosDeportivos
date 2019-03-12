@@ -12,6 +12,9 @@ import es.lanyu.commons.tiempo.DatableImpl;
 public class Partido extends EventoImpl {
 	private final static SimpleDateFormat sdfToString = new SimpleDateFormat("dd/MM/yy HH:mm");
 	
+	protected Participante local;
+	protected Participante visitante;
+	
 	public Partido(Participante local, Participante visitante, Date fecha) {
 		super();
 		this.local = local;
@@ -64,7 +67,7 @@ public class Partido extends EventoImpl {
 	
 	public String toString() {
 		//return "Partido [resultado=" + getResultado() + ", fecha=" + sdfToString.format(getFecha()) + ", local=" + local + ", visitante=" + visitante + "]";
-		return "Partido [resultado=" + getResultado() + ", fecha=" + fecha + ", local=" + local + ", visitante=" + visitante + "]";
+		return "Partido [resultado=" + getResultado() + ", fecha=" + getFecha() + ", local=" + local + ", visitante=" + visitante + "]";
 
 	}
 
@@ -73,5 +76,13 @@ public class Partido extends EventoImpl {
 		
 	}
 
+	public Participante getLocal() {
+		return local;
+	}
+
+	public Participante getVisitante() {
+		return visitante;
+	}
+	
 	
 }

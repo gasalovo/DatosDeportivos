@@ -1,10 +1,12 @@
-package com.acing.app;
+package com.acing.ui;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -14,6 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.acing.app.Participante;
+import com.acing.app.Partido;
+import com.acing.app.PartidoDAO;
+import com.acing.app.SerializadorJSON;
 import com.esotericsoftware.tablelayout.Value;
 import com.esotericsoftware.tablelayout.swing.Table;
 
@@ -52,14 +58,18 @@ public class EjemploJFrame extends JFrame {
 //      pn_AccesoDirecto.add(modificarValores);
       
       //Componentes
-      JLabel lbl_1 = new JLabel("Label 1");
-      JLabel lbl_2 = new JLabel("Pinta toString() por defecto");
+      JLabel lbl_local = new JLabel("Local");
+      JLabel lbl_visitante = new JLabel("Visitante");
       JLabel lbl_3 = new JLabel("Label 3");
       JLabel lbl_4 = new JLabel("Label 4");
       JLabel lbl_Resultado = new JLabel("Resultado de una operación");
-      JButton btn_1 = new JButton("Botón 1");
+      JButton btn_resultado = new JButton("Resultado");
       JButton btn_2 = new JButton("Botón 2");
-      JComboBox<String> cb_String = new JComboBox<>(new String[]{ "Primero", "Segundo" });
+      String[] participantes = Participante.mapaParticipanteIdPorNombre.values().stream()
+    		  .map(e -> e.toString()).toArray(String[]::new);
+      
+      JComboBox<String> cb_String = new JComboBox<>(participantes);
+      JComboBox<String> cb_String2 = new JComboBox<>(participantes);
       
       //Para usarlo en el combobox de abajo
       Object objetoPersonalizado = new Object() {
@@ -75,12 +85,20 @@ public class EjemploJFrame extends JFrame {
       txt_Input.setText("Algo escrito para pruebas");
       
     //Listeners
-      btn_1.addActionListener(new ActionListener() {
+      btn_resultado.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			lbl_Resultado.setText("Pulsado " + ((JButton)e.getSource()).getText().toString());
+			//lbl_Resultado.setText("Resultado " + ((JButton)e.getSource()).getText().toString());
+			PartidoDAO partidoDAO = new SerializadorJSON("eventos.json");
+			Collection<? extends Partido> partidos = partidoDAO.getEventos(); 
+			String res = partidos.stream()
+					.filter(e2 -> e2.getLocal().toString().equals("Valladolid"))
+					.map(par -> par.getResultado())
+					.toArray(String[]::new)[0];
+			lbl_Resultado.setText("Resultado: "+res);
 		}
+		
 	});
 //      btn_1.addActionListener(e -> lbl_Resultado.setText("Pulsado " + ((JButton)e.getSource()).getText().toString()));
       btn_2.addActionListener(e -> lbl_Resultado.setText(validarInput()));
@@ -101,12 +119,15 @@ public class EjemploJFrame extends JFrame {
 //      tabla.debug(Debug.all);
       
       //Agregar los componentes
-      tabla.addCell(lbl_1);
+      tabla.addCell(lbl_local);
       tabla.addCell(cb_String).width(anchoCombos);
       tabla.row();
-      tabla.addCell(lbl_3);
-      tabla.addCell(cb_VariosTipos).fillX();
-      tabla.addCell(lbl_2);//.expandX();
+      tabla.addCell(lbl_visitante);
+      tabla.addCell(cb_String2).width(anchoCombos);
+      tabla.row();
+      
+      //tabla.addCell(cb_VariosTipos).fillX();
+      //tabla.addCell(visitante);//.expandX();
       tabla.row();
       tabla.addCell(new JLabel("Es Algo"));
 //      ckb_ParaAlgo.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -115,7 +136,7 @@ public class EjemploJFrame extends JFrame {
       tabla.addCell(lbl_4);//lbl_1);
       tabla.addCell(txt_Input).colspan(2).fillX();
       tabla.row();
-      tabla.addCell(btn_1).center();
+      tabla.addCell(btn_resultado).center();
       tabla.addCell(lbl_Resultado).colspan(2);
       tabla.addCell(btn_2);
 //      lbl_Ciu.setText("Label 1 cambiada");

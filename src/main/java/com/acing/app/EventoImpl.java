@@ -10,9 +10,6 @@ public abstract class EventoImpl extends DatableImpl implements Evento {
 	transient protected Collection<Participante> participantes;
 	//protected Date fecha;
 	
-	protected Participante local;
-	protected Participante visitante;
-	
 	public EventoImpl() {
 		//sucesos = new ArrayList<>();
 		participantes = new ArrayList<>();
