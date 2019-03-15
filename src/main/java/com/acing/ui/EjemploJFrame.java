@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -92,11 +93,18 @@ public class EjemploJFrame extends JFrame {
 			//lbl_Resultado.setText("Resultado " + ((JButton)e.getSource()).getText().toString());
 			PartidoDAO partidoDAO = new SerializadorJSON("eventos.json");
 			Collection<? extends Partido> partidos = partidoDAO.getEventos(); 
-			String res = partidos.stream()
-					.filter(e2 -> e2.getLocal().toString().equals("Valladolid"))
+			List<String> res = partidos.stream()
+					.filter(e2 -> e2.getLocal().toString().equals(cb_String.getSelectedItem().toString()) &&
+					e2.getVisitante().toString().equals(cb_String2.getSelectedItem().toString()))
 					.map(par -> par.getResultado())
-					.toArray(String[]::new)[0];
-			lbl_Resultado.setText("Resultado: "+res);
+					.collect(Collectors.toList());
+			String resultado;
+			if (res.isEmpty()) {
+				resultado = "Este partido no esta en la base de datos";
+			} else {
+				resultado = res.get(0);
+			}
+			lbl_Resultado.setText("Resultado: " + resultado);
 		}
 		
 	});

@@ -6,7 +6,6 @@ public class Suceso {
 	public Suceso() {	
 		
 	}
-
 	public Participante getParticipante() {
 		return participante;
 	}
