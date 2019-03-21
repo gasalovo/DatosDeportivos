@@ -15,8 +15,10 @@ import java.net.URLConnection;
 import java.util.Collection;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 import com.acing.ui.EjemploJFrame;
+import com.acing.ui.PartidoFrame;
 
 
 /*
@@ -95,7 +97,8 @@ public class App {
 	  //partidos.stream().filter(e->e.getResultado().equals("5-0")).map(e2->e2.getResultado()+" palizon del "+e2.local).forEach(System.out::println);
 	  partidos.stream().forEach(System.out::println);
 	  
-	  JFrame ui = new EjemploJFrame();
+	  //JFrame ui = new EjemploJFrame();
+	  JFrame ui = new PartidoFrame();
 	  ui.setVisible(true);
     }
 }
